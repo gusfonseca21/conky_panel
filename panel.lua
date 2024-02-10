@@ -47,12 +47,13 @@ function conky_main ()
     mark_width = 2
     long_mark = 30
     short_mark = 25
-    num_of_marks = 20
+    num_of_marks = 21 -- Considering 0
     mark_radius = 15
     angle_per_mark = 2 * math.pi / num_of_marks
     mark_start_angle = math.rad(30)
     mark_end_angle = math.rad(330)
     angle_per_mark = (mark_end_angle - mark_start_angle) / num_of_marks
+    mark_value_start = 0
     for mark = 1, num_of_marks do
         if mark % 2 == 0 then
             mark_length = short_mark
@@ -64,10 +65,11 @@ function conky_main ()
         y_mark_start = center_y - (outline_radius - mark_radius) * math.sin(mark_angle)
         x_mark_end = center_x + (outline_radius - mark_length) * math.cos(mark_angle)
         y_mark_end = center_y - (outline_radius - mark_length) * math.sin(mark_angle)
-        
+
         cairo_move_to(cr, x_mark_start, y_mark_start)
         cairo_line_to(cr, x_mark_end, y_mark_end)
-        cairo_show_text (cr, mark)
+        cairo_show_text (cr, mark_value_start)
+        mark_value_start = mark_value_start + 5
         cairo_stroke(cr)
     end
 
@@ -110,7 +112,7 @@ end
 
 function position_needle()
     local new_target_angle = min_angle + (cpu_total - min_cpu) / (max_cpu - min_cpu) * (max_angle - min_angle)
-    target_angle = target_angle + (new_target_angle - target_angle) * 0.3 -- Adjust the smoothing factor as needed
+    target_angle = target_angle + (new_target_angle - target_angle) * 0.2 -- Adjust the smoothing factor as needed
 
     return math.rad(target_angle)
 end
