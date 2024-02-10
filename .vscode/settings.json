@@ -1,0 +1,4 @@
+{
+  "Lua.diagnostics.globals": ["cpu"],
+  "Lua.diagnostics.disable": ["undefined-global", "lowercase-global"]
+}
